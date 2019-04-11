@@ -8,8 +8,6 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "uart.h"
-#include "rtc.h"
-#include "uart_tera.h"
 
 #define MAL_SIZE 1
 #define HAL_SIZE 4

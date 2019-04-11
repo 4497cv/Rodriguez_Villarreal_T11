@@ -92,55 +92,68 @@ void I2C_tx_rx_mode(uint8_t tx_or_rx)
 {
 	if(FALSE == tx_or_rx)
 	{
-		/*Recieve mode*/
+		/** Reception mode **/
 		I2C0->C1 &= ~I2C_C1_TX_MASK;
 		I2C0->C1 &= ~I2C_C1_TXAK_MASK;
 	}
 	else
 	{
-		/*Transmit mode*/
+		/** Transmission mode **/
 		I2C0->C1 |= I2C_C1_TX_MASK;
 	}
 }
 
-void I2C_nack(void)
-{
-
-}
-
 void I2C_repeted_start(void)
 {
-
+	/**  Writing 1 to this bit generates a repeated START condition provided it is the current master. **/
+	I2C0->C1 |= I2C_C1_RSTA_MASK;
 }
 
 void I2C_write_byte(uint8_t data)
 {
-
+	/*Data I/O register
+	 *  In master transmit mode, when data is written to this register, a data transfer is initiated.*/
+	I2C0->D = data;
 }
 
 uint8_t I2C_read_byte(void)
 {
+	/*The value in the register ->D is send to a variable*/
+	return I2C0->D;
+}
 
+void I2C_start(void)
+{
+	/*Generate the Start Signal*/
+	I2C0->C1 |= I2C_C1_TX_MASK;
+	I2C0->C1 |= I2C_C1_MST_MASK;
+}
+
+void I2C_stop(void)
+{
+	/*Generates the Stop Signal*/
+	I2C0->C1 &= ~I2C_C1_TX_MASK;
+	I2C0->C1 &= ~I2C_C1_MST_MASK;
 }
 
 void I2C_wait(void)
 {
 
+	/*Waits until the process TCF(Transfer Complete Flag) changes*/
+	while(FALSE == (I2C0->S && I2C_S_IICIF_MASK))
+	{
+		continue;
+	}
+
+	I2C0->S |= I2C_S_IICIF_MASK;
 }
 
 uint8_t I2C_get_ack(void)
 {
 
+	/*It returns if there is Acknowledge or not*/
+	while(FALSE != (I2C0->S & I2C_S_RXAK_MASK))
+	{
+		continue;
+	}
 }
-
-void I2C_start(void)
-{
-
-}
-
-void I2C_stop(void)
-{
-
-}
-
-#endif /* I2C_H_ */
