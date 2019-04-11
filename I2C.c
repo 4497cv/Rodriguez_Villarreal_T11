@@ -3,7 +3,7 @@
 	\brief    This is the source file for the i^2 C device driver for Kinetis K64.
 	\authors: César Villarreal Hernández,   ie707560
 	          José Luis Rodríguez Gutierrez,ie705694
-	\date	    09/04/2019
+	\date	  10/04/2019
  */
 
 #include "I2C.h"
@@ -62,12 +62,30 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate)
 
 uint8_t I2C_busy(void)
 {
-
+	if((FALSE == (I2C0->S)) && (I2C_S_BUSY_MASK))
+	{
+		/** The i2c is in idle state **/
+		return TRUE; //I2C is idle
+	}
+	else
+	{
+		/** The i2c is in busy state **/
+		return FALSE;
+	}
 }
 
 void I2C_mst_or_slv_mode(uint8_t mst_or_slv)
 {
-
+	if(TRUE == mst_or_slv)
+	{
+		/** I2C is set to master mode**/
+		I2C0->C1 |= I2C_C1_MST_MASK;
+	}
+	else
+	{
+		/** I2C is set to slave mode**/
+		I2C0->C1 &= ~(I2C_C1_MST_MASK);
+	}
 }
 
 void I2C_tx_rx_mode(uint8_t tx_or_rx)
