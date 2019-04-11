@@ -7,7 +7,6 @@
 #include "system.h"
 
 int main(void) {
-	uint8_t flag_hour = FALSE;
 	uint8_t mb_flag;
 	system_init();
 
