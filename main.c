@@ -4,12 +4,18 @@
  * @brief   Application entry point.
  */
 #include "system.h"
+#include <terminal.h>
+#include "delay.h"
 
 int main(void) {
 	uint8_t mb_flag;
 	uint8_t mb_mailbox;
-
+	uint8_t min;
 	system_init();
+
+	RTC_set_min(06);
+	RTC_set_sec(0);
+
 
 	for(;;)
 	{
@@ -20,15 +26,15 @@ int main(void) {
 			/**/
 			if(ASCII_ONE == mb_mailbox)
 			{
-				tera_get_hora();
+					term_get_time();
 			}
 			else if(ASCII_TWO == mb_mailbox)
 			{
-				tera_set_hora();
+				term_set_time();
 			}
 			else if(ASCII_ESC == mb_mailbox)
 			{
-				tera_menu();
+				term_menu();
 			}
 			/**/
 			/*For debug*/

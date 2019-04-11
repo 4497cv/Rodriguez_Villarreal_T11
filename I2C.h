@@ -1,36 +1,56 @@
 /**
 	\file 	  i2c.h
 	\brief
-			      This is the source file for the i^2 C device driver for Kinetis K64.
-	\authors: César Villarreal Hernández,   ie707560
+			  This is the header file for the i2c device driver for Kinetis K64.
+	\authors: César Villarreal Hernández, ie707560
 	          José Luis Rodríguez Gutierrez,ie705694
-	\date	    09/04/2019
+	\date	  10/05/2019
  */
 
 #ifndef I2C_H_
 #define I2C_H_
 
+#include "NVIC.h"
+#include "bits.h"
+#include "GPIO.h"
 #include "MK64F12.h"
 #include "stdint.h"
 
-/** Constant that represent the clock enable for GPIO A **/
+/*Constant that represent the freq_div for I2C_F*/
+#define FREQUENCY_DIVIDER 0x40
+/** Constant that represent the clock enable for GPIO A */
 #define I2C0_CLOCK_GATING 0x40
-
-/** This enum define the I2C channel to be used. **/
+/**/
+#define MULT 4
+/**
+ * \brief This enum define the I2C channel to be used.
+ */
 typedef enum {I2C_0, I2C_1, I2C_2} i2c_channel_t;
+/*
+ * */
+typedef enum{I2C_SLV = FALSE,I2C_MST = TRUE}i2c_mst_t;
+/*
+ * \brief This enum define if the I2C is going to be Rx or Tx*/
+typedef enum{I2C_RX = FALSE,I2C_TX = TRUE}i2c_mode_t;
 
-/*!
-  	 \brief     Configures the I2C port based on the input parameters.
-  	 	          Also, internally this function configures the GPIO,
-                pin control register and clock gating, to be used as I2C.
-  	 	          It is recommended to use pin 2 and 3 of GPIOB.
+/********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /*!
+  	 \brief
+  	 	 Configures the I2C port based on the input parameters.
+  	 	 Also, internally this function configures the GPIO, pin control register and clock gating, to be used as I2C.
+  	 	 It is recommended to use pin 2 and 3 of GPIOB.
   	 \param[in] channel It is the channel to be used.
   	 \param[in] systemClock Frequency of the system.
   	 \param[in] baudRate baud rate between MCU and I2C device.
-  	 \return    void
+  	 \return void
+
   */
 void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 Indicates the status of the bus regardless of slave or master mode. Internally checks the busy bit int the
@@ -39,7 +59,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
  uint8_t I2C_busy(void);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 It selects between master or slave mode.
@@ -48,7 +70,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
  void I2C_mst_or_slv_mode(uint8_t mst_or_slv);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 It selects between transmitter mode or receiver mode.
@@ -57,7 +81,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
  void I2C_tx_rx_mode(uint8_t tx_or_rx);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 It generates the Not ACKnowledge that is needed when the master reads data.
@@ -65,7 +91,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
  void I2C_nack(void);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 It generates a repeated start that is needed when master reads data.
@@ -73,7 +101,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
  void I2C_repeted_start(void);
-
+ /********************************************************************************************/
+ /********************************************************************************************/
+ /********************************************************************************************/
  /*!
   	 \brief
   	 	 It writes the data to be transmitted into the transmission buffer. When you want to
@@ -83,7 +113,9 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate);
 
   */
 void I2C_write_byte(uint8_t data);
-
+/********************************************************************************************/
+/********************************************************************************************/
+/********************************************************************************************/
 /*!
  	 \brief
  	 	 It reads data from the receiving buffer.
@@ -91,7 +123,9 @@ void I2C_write_byte(uint8_t data);
 
  */
 uint8_t  I2C_read_byte(void);
-
+/********************************************************************************************/
+/********************************************************************************************/
+/********************************************************************************************/
 /*!
  	 \brief
  	 	 Indicates the status of the bus regardless of slave or master mode. Internally checks the interrupt flag of the
@@ -106,15 +140,19 @@ uint8_t  I2C_read_byte(void);
 
  */
 void I2C_wait(void);
-
+/********************************************************************************************/
+/********************************************************************************************/
+/********************************************************************************************/
 /*!
  	 \brief
  	 	 Indicates if the acknowledge was received.
  	 \return This function returns a 0 logic if the acknowledge was received and returns 1 logic if the acknowledge was not received.
 
  */
-uint8_t I2C_get_ack(void);
-
+void I2C_get_ack(void);
+/********************************************************************************************/
+/********************************************************************************************/
+/********************************************************************************************/
 /*!
  	 \brief
  	 	 Generates the start signal. When MST bit is changed from 0 to 1, a START signal is generated
@@ -124,7 +162,9 @@ uint8_t I2C_get_ack(void);
 
  */
 void I2C_start(void);
-
+/********************************************************************************************/
+/********************************************************************************************/
+/********************************************************************************************/
 /*!
  	 \brief
  	 	 Generates the stop signal. When this bit changes from 1 to 0, a STOP signal is generated
@@ -134,5 +174,7 @@ void I2C_start(void);
 
  */
 void I2C_stop(void);
+
+
 
 #endif /* I2C_H_ */

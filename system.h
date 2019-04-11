@@ -2,16 +2,19 @@
 #ifndef SYSTEM_H_
 #define SYSTEM_H_
 
+#include <terminal.h>
 #include <uart.h>/**UART device driver*/
 #include "MK64F12.h" /* include peripheral declarations */
 #include "nvic.h"/**NVIC device driver*/
 #include "gpio.h"
 #include "i2c.h"
 #include "uart.h"
+#include "rtc.h"
+
 
 #define MAL_SIZE 1
 #define HAL_SIZE 4
-#define APP_SIZE 0
+#define APP_SIZE 1
 #define SYSTEM_CLOCK 21000000
 
 /*!
@@ -36,21 +39,21 @@ void UART_config(void);
 void I2C_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the I2C module.
+ 	 \brief		 It contains the configuration for the i2c module.
  	 \param[in]  void
  	 \return     static void
  */
 void GPIO_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the NVIC module.
+ 	 \brief		 It contains the configuration for the i2c module.
  	 \param[in]  void
  	 \return     static void
  */
 void NVIC_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the RTC module.
+ 	 \brief		 It contains the configuration for the i2c module.
  	 \param[in]  void
  	 \return     static void
  */

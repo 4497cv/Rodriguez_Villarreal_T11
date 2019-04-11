@@ -12,12 +12,12 @@ void (*fptr_HAL[HAL_SIZE])(void) =
 
 void (*fptr_MAL[MAL_SIZE])(void) =
 {
-
+	RTC_config
 };
 
 void (*fptr_APP[APP_SIZE])(void) =
 {
-
+	term_menu
 };
 
 void system_init(void)
@@ -29,15 +29,11 @@ void system_init(void)
 		fptr_HAL[i]();
 	}
 
-	for(i = 0; i < MAL_SIZE; i++)
-	{
-		fptr_MAL[i]();
-	}
 
-	for(i = 0; i < APP_SIZE; i++)
-	{
-		fptr_APP[i]();
-	}
+	fptr_MAL[0]();
+
+	fptr_APP[0]();
+
 }
 
 void UART_config(void)
@@ -74,4 +70,9 @@ void NVIC_config(void)
 	NVIC_enable_interrupt_and_priotity(UART0_IRQ, PRIORITY_10);
 	/**Enables interrupts*/
 	NVIC_global_enable_interrupts;
+}
+
+void RTC_config(void)
+{
+	RTC_enable();
 }
