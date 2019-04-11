@@ -8,8 +8,10 @@
 #include "gpio.h"
 #include "i2c.h"
 #include "uart.h"
+#include "rtc.h"
+#include "uart_tera.h"
 
-#define MAL_SIZE 0
+#define MAL_SIZE 1
 #define HAL_SIZE 4
 #define APP_SIZE 0
 #define SYSTEM_CLOCK 21000000
@@ -22,31 +24,38 @@
 void system_init(void);
 
 /*!
- 	 \brief		 It contains the configuration for the UART device driver.
+ 	 \brief		 It contains the configuration for the UART module.
  	 \param[in]  void
  	 \return     static void
  */
 void UART_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the i2c device driver.
+ 	 \brief		 It contains the configuration for the i2c module.
  	 \param[in]  void
  	 \return     static void
  */
 void I2C_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the GPIO device driver.
+ 	 \brief		 It contains the configuration for the I2C module.
  	 \param[in]  void
  	 \return     static void
  */
 void GPIO_config(void);
 
 /*!
- 	 \brief		 It contains the configuration for the I2C device driver.
+ 	 \brief		 It contains the configuration for the NVIC module.
  	 \param[in]  void
  	 \return     static void
  */
 void NVIC_config(void);
+
+/*!
+ 	 \brief		 It contains the configuration for the RTC module.
+ 	 \param[in]  void
+ 	 \return     static void
+ */
+void RTC_config(void);
 
 #endif
