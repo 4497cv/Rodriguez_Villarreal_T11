@@ -1,5 +1,5 @@
 /**
-	\file 	  i2c.c
+	\file 	  i2c.h
 	\brief
 			      This is the source file for the i^2 C device driver for Kinetis K64.
 	\authors: César Villarreal Hernández,   ie707560
