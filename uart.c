@@ -21,7 +21,7 @@ void UART0_RX_TX_IRQHandler(void)
 	/*First is verified if the serial port finished to transmit*/
 	UART_Wait_Transmit_Complete();
 	/*The info is saved in Data Register*/
-	g_mail_box_uart_0.mailBox = UART_Get_Receiver_Data_Buffer(UART_0);
+	g_mail_box_uart_0.mail_box = UART_Get_Receiver_Data_Buffer(UART_0);
 	/*There are new data*/
 	g_mail_box_uart_0.flag = TRUE;
 }
@@ -349,35 +349,34 @@ static void UART_Data_Transmit(uart_channel_t uart_channel, int8_t* data_string)
 	}
 }
 
-uart_mail_box_t UART_get_mailbox(uart_channel_t uart_channel)
+uint8_t UART_get_mailbox(uart_channel_t uart_channel)
 {
-	uart_mail_box_t *mailbox_p;
-
+	uint8_t flag;
 	switch(uart_channel)
 	{
 	case UART_0:
-		mailbox_p = &g_mail_box_uart_0;
+		flag = g_mail_box_uart_0.mail_box;
 	break;
 	case UART_1:
-		mailbox_p = &g_mail_box_uart_1;
+		flag = g_mail_box_uart_1.mail_box;
 	break;
 	case UART_2:
-		mailbox_p = &g_mail_box_uart_2;
+		flag = g_mail_box_uart_2.mail_box;
 	break;
 	case UART_3:
-		mailbox_p = &g_mail_box_uart_3;
+		flag = g_mail_box_uart_3.mail_box;
 	break;
 	case UART_4:
-		mailbox_p = &g_mail_box_uart_4;
+		flag = g_mail_box_uart_4.mail_box;
 	break;
 	case UART_5:
-		mailbox_p = &g_mail_box_uart_5;
+		flag = g_mail_box_uart_5.mail_box;
 	break;
 	default:
 	break;
 	}
 
-	return *mailbox_p;
+	return flag;
 }
 
 void UART_empty_mailbox(uart_channel_t uart_channel)
@@ -386,29 +385,59 @@ void UART_empty_mailbox(uart_channel_t uart_channel)
 	{
 	case UART_0:
 		g_mail_box_uart_0.flag = 0;
-		g_mail_box_uart_0.mailBox = 0;
+		g_mail_box_uart_0.mail_box = 0;
 	break;
 	case UART_1:
 		g_mail_box_uart_1.flag = 0;
-		g_mail_box_uart_1.mailBox = 0;
+		g_mail_box_uart_1.mail_box = 0;
 	break;
 	case UART_2:
 		g_mail_box_uart_2.flag = 0;
-		g_mail_box_uart_2.mailBox = 0;
+		g_mail_box_uart_2.mail_box = 0;
 	break;
 	case UART_3:
 		g_mail_box_uart_3.flag = 0;
-		g_mail_box_uart_3.mailBox = 0;
+		g_mail_box_uart_3.mail_box = 0;
 	break;
 	case UART_4:
 		g_mail_box_uart_4.flag = 0;
-		g_mail_box_uart_4.mailBox = 0;
+		g_mail_box_uart_4.mail_box = 0;
 	break;
 	case UART_5:
 		g_mail_box_uart_5.flag = 0;
-		g_mail_box_uart_5.mailBox = 0;
+		g_mail_box_uart_5.mail_box = 0;
 	break;
 	default:
 	break;
 	}
+}
+
+uint8_t UART_get_mailbox_flag(uart_channel_t uart_channel)
+{
+	uint8_t flag;
+	switch(uart_channel)
+	{
+	case UART_0:
+		flag = g_mail_box_uart_0.flag;
+	break;
+	case UART_1:
+		flag = g_mail_box_uart_1.flag;
+	break;
+	case UART_2:
+		flag = g_mail_box_uart_2.flag;
+	break;
+	case UART_3:
+		flag = g_mail_box_uart_3.flag;
+	break;
+	case UART_4:
+		flag = g_mail_box_uart_4.flag;
+	break;
+	case UART_5:
+		flag = g_mail_box_uart_5.flag;
+	break;
+	default:
+	break;
+	}
+
+	return flag;
 }

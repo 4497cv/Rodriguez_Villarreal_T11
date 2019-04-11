@@ -19,7 +19,7 @@
 
 typedef struct{
 	uint8_t flag; /** Flag to indicate that there is new data*/
-	uint8_t mailBox; /** it contains the received data*/
+	uint8_t mail_box; /** it contains the received data*/
 } uart_mail_box_t;
 
 /** This enumeration defines the UART's ports to be used **/
@@ -96,8 +96,10 @@ static uint8_t UART_Get_Receiver_Data_Buffer(uart_channel_t uart_channel);
  */
 static void UART_Data_Transmit(uart_channel_t uart_channel, int8_t* data_string);
 
-uart_mail_box_t UART_get_mailbox(uart_channel_t uart_channel);
+uint8_t UART_get_mailbox(uart_channel_t uart_channel);
 
 void UART_empty_mailbox(uart_channel_t uart_channel);
+
+uint8_t UART_get_mailbox_flag(uart_channel_t uart_channel);
 
 #endif /* UART_H_ */
