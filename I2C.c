@@ -32,44 +32,27 @@ void I2C_init(i2c_channel_t channel, uint32_t system_clock, uint16_t baud_rate)
   {
   	case I2C_0:
   		SIM->SCGC4 |= SIM_SCGC4_I2C0_MASK;
-  		/*ClockRate*/
+  		/** Set the clock rate **/
   		I2C0->F = I2C_F_ICR(valueSCL);
-  		/*Multiplier Factor
-  		 * 00 mul = 1
-  		 * 01 mul = 2
-  		 * 10 mul = 4
-  		 * 11 Reserved
-  		 * */
   		I2C0->F = I2C_F_MULT(2);
-  		/*Enable I2C module*/
+  		/** Enable the i2c module **/
   		I2C0->C1 = I2C_C1_IICEN_MASK;
   	break;
   	case I2C_1:
   		SIM->SCGC4 |= SIM_SCGC4_I2C1_MASK;
-  		/*ClockRate*/
+  		/** Set the clock rate **/
   		I2C1->F = I2C_F_ICR(valueSCL);
-  		/*Multiplier Factor
-  		 * 00 mul = 1
-  		 * 01 mul = 2
-  		 * 10 mul = 4
-  		 * 11 Reserved
-  		 * */
   		I2C1->F = I2C_F_MULT(2);
   		/*Enable I2C mo0dule*/
   		I2C1->C1 = I2C_C1_IICEN_MASK;
   	break;
   	case I2C_2:
   		SIM->SCGC1 |= SIM_SCGC1_I2C2_MASK;
-  		/*ClockRate*/
+  		/** Set the clock rate **/
   		I2C2->F = I2C_F_ICR(valueSCL);
-  		/*Multiplier Factor
-  		 * 00 mul = 1
-  		 * 01 mul = 2
-  		 * 10 mul = 4
-  		 * 11 Reserved
-  		 * */
+  		/** Set multiplier factor by 4 **/
   		I2C2->F = I2C_F_MULT(2);
-  		/*Enable I2C module*/
+  		/** Enable the i2c module **/
   		I2C2->C1 = I2C_C1_IICEN_MASK;
   	break;
   	default:
